@@ -1,8 +1,8 @@
 export interface User {
     username: string;
-    email: string;
+    mail: string;
     password: string;
-    isMechanic: boolean;
+    ismechanic: boolean;
 }
 
 export interface Vehicle {

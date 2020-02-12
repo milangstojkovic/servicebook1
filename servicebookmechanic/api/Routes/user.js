@@ -52,7 +52,7 @@ router.post('/login', (req, res, next) => {
 });
 
 router.post('/signup', (req,res,next)=> {
-    User.find({username:req.body.name})
+    User.find({username:req.body.username})
     .exec()
     .then(user=> {
         if (user.length>=1) 
@@ -70,8 +70,8 @@ router.post('/signup', (req,res,next)=> {
                     });
                 } else {
                     const user=new User({
-                        username: req.body.name,
-                        password:hash,
+                        username: req.body.username,
+                        password:req.body.password,
                         mail: req.body.mail,
                         ismechanic: req.body.ismechanic
                 });
@@ -85,7 +85,7 @@ router.post('/signup', (req,res,next)=> {
                 .catch(err=>{
                     console.log(err);
                     res.status(500).json({
-                      
+                      message:"asdsad",
                         error:err
                     })
                 });
@@ -96,9 +96,9 @@ router.post('/signup', (req,res,next)=> {
 });
 
 router.get('/:username', (req,res,next)=> {
-    const username=req.params.username;
     
-    User.findById(username).exec()
+    User.findOne({username:req.params.username})
+    .exec()
     .then(doc=>{
         console.log(doc);
         if(doc) {

@@ -1,6 +1,6 @@
 import React, { Component, useReducer } from "react";
-import "./login.css";
-import { getUserByNameService } from "../../CassandraServices/user.service";
+//import "./login.css";
+import { getUserByNameService } from "../../Services/user.service";
 import { User } from "../../Models/Model";
 
 interface Props {}
@@ -30,7 +30,6 @@ class Login extends Component<Props, IState> {
     if (this.user) {
       if (this.user.password==this.state.password) {
         localStorage.setItem("username", this.user.username);
-        window.location.reload();
       }
     }
     console.log(localStorage.getItem("username"));

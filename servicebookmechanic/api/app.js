@@ -1,7 +1,6 @@
 const express= require('express');
 const app=express();
 const morgan=require('morgan');
-
 const userRoutes=require('./Routes/user');
 const recordRoutes=require('./Routes/record');
 const vehicleRoutes=require('./Routes/vehicle');
@@ -15,7 +14,6 @@ mongoose.connect('mongodb+srv://milangstojkovic:SSn7m58%21@servicebook-lwdm8.mon
 app.use(morgan('dev'));
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
-
 app.use((req, res, next)=> {
     res.header('Access-Control-Allow-Origin', '*');
     res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');

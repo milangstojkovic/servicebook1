@@ -1,12 +1,13 @@
 import React, { Component } from "react";
 import { User } from "../../Models/Model";
-import {createUserService, getUsersService} from '../../CassandraServices/user.service';
+import {createUserService, getUsersService} from '../../Services/user.service';
 interface Props {}
 interface IState {
-  email: string;
+  mail: string;
   password: string;
   username: string;
   i:Number;
+  isMechanic:boolean;
 }
 const emptyString = "";
 class Register extends Component<Props, IState> {
@@ -16,9 +17,10 @@ class Register extends Component<Props, IState> {
     super(props);
     this.state = {
       username: emptyString,
-      email: emptyString,
+      mail: emptyString,
       password: emptyString,
-      i:0
+      i:0,
+      isMechanic:false
     };
   }
   render() {
@@ -35,7 +37,7 @@ class Register extends Component<Props, IState> {
         <label>Email:</label>
         <input
           type="email"
-          value={this.state.email}
+          value={this.state.mail}
           placeholder="Add email"
           onChange={e => this.handleChangeEmail(e)}
           className="input-email"
@@ -48,6 +50,7 @@ class Register extends Component<Props, IState> {
           onChange={e => this.handleChangePassword(e)}
           className="input-password"
         ></input>
+        <input type="checkbox" onChange={e=>this.handleChangeMechanic(e)}></input> <label>Check if u re Mechanic</label>
         <div className="buttons-login-register">
           <button
             id="btnReg"
@@ -62,6 +65,12 @@ class Register extends Component<Props, IState> {
     );
     
   }
+  handleChangeMechanic(e:any): void {
+    if(e.target.checked) 
+      this.setState({isMechanic: true});
+    else
+    this.setState({isMechanic: false});
+  }
   handleChangePassword(e: any): void {
     this.setState({ password: e.target.value });
   }
@@ -72,7 +81,7 @@ class Register extends Component<Props, IState> {
       this.setState({i:1});
     }
     let pomocni:string[]=this.emails.filter(element=>element===target.value);
-    this.setState({ email: target.value });
+    this.setState({ mail: target.value });
     if(pomocni.length>0) {
       target.style.backgroundColor='red';
       (document.getElementById("btnReg") as HTMLInputElement).disabled=true;
@@ -102,16 +111,17 @@ class Register extends Component<Props, IState> {
   buttonRegisterClicked(e: any): void {
       e.preventDefault();
     let user = {
-      email: this.state.email,
+      mail: this.state.mail,
       password: this.state.password,
-      username: this.state.username
+      username: this.state.username,
+      ismechanic: this.state.isMechanic
     };
       createUserService(user as User);
-      window.location.reload();
+      console.log(user);
   }
   async getData() {
     await getUsersService().then(res=>this.usernames=res.map(element=>element.username));
-    await getUsersService().then(res=>this.emails=res.map(element=>element.email));
+    await getUsersService().then(res=>this.emails=res.map(element=>element.mail));
     console.log(this.usernames)
   }
 }

@@ -20,7 +20,7 @@ router.get('/', (req,res,next)=> {
 
 router.post('/', (req, res, next) => {
     const vehicle = new Vehicle({
-        id: new mongoose.Types.ObjectId(),
+        _id: new mongoose.Types.ObjectId(),
         manufacturer: req.body.manufacturer,
         modelyear: req.body.modelyear,
         ownerid: req.body.ownerid
@@ -60,7 +60,7 @@ router.get('/:vehicleid', (req,res,next)=> {
 
 router.delete('/:vehicleid', (req,res,next)=> {
     const id=req.params.vehicleid
-    vehicle.remove({id: id}).exec()
+    vehicle.remove({_id: id}).exec()
     .then(result => {
         res.status(200).json(result);
     })
