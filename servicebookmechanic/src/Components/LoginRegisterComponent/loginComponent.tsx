@@ -2,6 +2,8 @@ import React, { Component, useReducer } from "react";
 //import "./login.css";
 import { getUserByNameService } from "../../Services/user.service";
 import { User } from "../../Models/Model";
+import 'bootstrap/dist/css/bootstrap.min.css';
+
 
 interface Props {}
 interface IState {
@@ -36,25 +38,35 @@ class Login extends Component<Props, IState> {
   }
   render() {
     return (
-      <form className="login-form">
+      <form className="login-form column">
+        <div className="col ">
+        <div className="col">
+          <div className="row">
         <label>Username:</label>
+        </div>
+        <div className="row">
         <input
           type="username"
           value={this.state.username}
           onChange={e => this.handleChangeUsername(e)}
           placeholder="Add username"
-        ></input>
+        ></input></div></div>
+        <div className="col">
+        <div className="row">
+
         <label>Password:</label>
+        </div>          <div className="row">
+
         <input
           type="password"
           value={this.state.password}
           placeholder="Add password"
           onChange={e => this.handleChangePassword(e)}
           className="input-password"
-        ></input>
+        ></input></div></div>
         <div className="buttons-login-register">
           <button className="btn btn-primary" onClick={e=>this.logInUser(e)}> Login </button>
-        </div>
+        </div></div>
       </form>
     );
   }
