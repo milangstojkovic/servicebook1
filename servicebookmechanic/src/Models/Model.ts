@@ -23,6 +23,7 @@ export interface Record {
     vehicleId:number;
     answered: boolean;
     mechanicid: number;
+    price:number;
 }
 
 export enum RecordStatus {
