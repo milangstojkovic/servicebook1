@@ -4,7 +4,7 @@ const morgan=require('morgan');
 const userRoutes=require('./Routes/user');
 const recordRoutes=require('./Routes/record');
 const vehicleRoutes=require('./Routes/vehicle');
-const vehicleRoutes=require('./Routes/mechanic');
+const mechanicRoutes=require('./Routes/mechanic');
 
 const bodyParser=require('body-parser');
 const mongoose=require('mongoose');

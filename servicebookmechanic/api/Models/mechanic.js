@@ -24,4 +24,4 @@ const MechanicSchema = new mongoose.Schema({
     }
 })
 
-module.exports = mongoose.model('user', MechanicSchema)
+module.exports = mongoose.model('mechanic', MechanicSchema)

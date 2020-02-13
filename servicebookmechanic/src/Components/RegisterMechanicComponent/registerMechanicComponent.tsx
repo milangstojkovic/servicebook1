@@ -1,8 +1,7 @@
 import React, { Component } from "react";
-import { User } from "../../Models/Model";
+import { Mechanic } from "../../Models/Model";
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { createUserService, getUsersService } from '../../Services/user.service';
-import './registerUserComponent.css';
+import { createMechanicService, getMechanicService } from '../../Services/mechanic.service';
 interface Props { }
 interface IState {
     mail: string;
@@ -10,10 +9,9 @@ interface IState {
     i: Number;
     name: string;
     surname: string;
-    mechanicid: string;
 }
 const emptyString = "";
-class RegisterUser extends Component<Props, IState> {
+class RegisterMechanic extends Component<Props, IState> {
     usernames!: string[];
     emails!: string[];
     constructor(props: Props) {
@@ -23,8 +21,7 @@ class RegisterUser extends Component<Props, IState> {
             surname: emptyString,
             mail: emptyString,
             password: emptyString,
-            i: 0,
-            mechanicid: "jjjjjs"
+            i: 0
         };
     }
     render() {
@@ -103,19 +100,17 @@ class RegisterUser extends Component<Props, IState> {
     }
     buttonRegisterClicked(e: any): void {
         e.preventDefault();
-        let user = {
+        let mechanic = {
             mail: this.state.mail,
             password: this.state.password,
             name: this.state.name,
-            surname: this.state.surname,
-            mechanicid: this.state.mechanicid,
+            surname: this.state.surname
         };
-        createUserService(user as User);
-        console.log(user);
+        createMechanicService(mechanic as Mechanic);
+        console.log(mechanic);
     }
     async getData() {
-        await getUsersService().then(res => this.emails = res.map(element => element.mail));
+        await getMechanicService().then(res => this.emails = res.map(element => element.mail));
     }
 }
-
-export default RegisterUser;
+export default RegisterMechanic;
