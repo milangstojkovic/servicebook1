@@ -44,7 +44,12 @@ const RecordSchema=new mongoose.Schema({
         type: String,
         trim:true,
         required:true
-    }
+	},
+	price:{
+		type:Number,
+		trim:true,
+		reqired:true
+	}
 })
 
 module.exports=mongoose.model('record', RecordSchema)

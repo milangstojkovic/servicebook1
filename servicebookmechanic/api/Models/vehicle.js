@@ -23,6 +23,11 @@ const VehicleSchema=new mongoose.Schema({
 		type:String,
 		trim:true,
 		required:true
+	},
+	mechanicid:{
+		type:String,
+		trim:true,
+		required:true
 	}
 	
 })
