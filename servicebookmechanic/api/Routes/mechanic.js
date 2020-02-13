@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose');
-const User = require('../Models/user');
+const Mechanic = require('../Models/mechanic');
 const bcrypt = require('bcryptjs');
 
 router.get('/', (req, res, next) => {
@@ -19,7 +19,7 @@ router.get('/', (req, res, next) => {
 });
 
 router.post('/login', (req, res, next) => {
-    User.find({ mail: req.body.mail })
+    User.find({ username: req.body.username })
         .exec()
         .then(user => {
             if (user.length < 1) {
@@ -57,7 +57,7 @@ router.post('/signup', (req, res, next) => {
         .then(user => {
             if (user.length >= 1) {
                 return res.status(409).json({
-                    message: "mail exists!"
+                    message: "Mail exists!"
                 });
             } else {
                 bcrypt.hash(req.body.password, 10, (err, hash) => {
@@ -67,12 +67,11 @@ router.post('/signup', (req, res, next) => {
                             error: err
                         });
                     } else {
-                        const user = new User({
+                        const mechanic = new Mechanic({
                             name: req.body.name,
                             surname: req.body.surname,
                             password: req.body.password,
                             mail: req.body.mail,
-                            mechanicid: req.body.mechanicid
                         });
                         user.save().then(result => {
                             console.log(result);

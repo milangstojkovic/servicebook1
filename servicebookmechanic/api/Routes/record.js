@@ -21,6 +21,7 @@ router.get('/', (req,res,next)=> {
 router.post('/', (req, res, next) => {
     const record = new Record({
         _id: new mongoose.Types.ObjectId(),
+        name: req.body.name,
         startdate: req.body.startdate,
         status: 0,
         vehicleid: req.body.vehicleid,
@@ -76,7 +77,7 @@ router.delete('/:recordid', (req,res,next)=> {
 
 router.patch('/:recordid', (req,res,next)=> {
     const id=req.params.recordid;
-    record.update({_id:id}, {$set: {enddate:req.body.enddate, vehiclekms:req.body.vehiclekms, note:req.body.note, answered:true, status:req.body.status}})
+    record.update({_id:id}, {$set: {startdate:req.body.startdate, enddate:req.body.enddate, vehiclekms:req.body.vehiclekms, note:req.body.note, answered:true, status:req.body.status}})
     .exec()
     .then(result=> {
         console.log(result);

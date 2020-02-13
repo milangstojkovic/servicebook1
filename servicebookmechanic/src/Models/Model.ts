@@ -1,28 +1,34 @@
 export interface User {
-    username: string;
+    name:string;
+    surname:string;
     mail: string;
     password: string;
-    ismechanic: boolean;
+    mechanicid: string;
 }
-
+export interface Mechanic{
+    name:string;
+    surname:string;
+    mail: string;
+    password: string;
+}
 export interface Vehicle {
-    id: number;
+    id: string;
     manufacturer: string;
     model: string;
-    modelYear: number;
-    ownerId: number;
+    modelyear: number;
+    ownerid: string;
 }
 
 export interface Record {
-    id: number;
-    startDate: Date;
-    endDate: Date;
+    id: string;
+    name:string;
+    startdate: Date;
+    enddate: Date;
     note: string;
-    vehicleKms: number;
+    vehiclekms: number;
     status: RecordStatus;
-    vehicleId:number;
+    vehicleid:string;
     answered: boolean;
-    mechanicid: number;
 }
 
 export enum RecordStatus {
