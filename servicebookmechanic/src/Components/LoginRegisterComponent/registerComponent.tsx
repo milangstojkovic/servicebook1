@@ -1,17 +1,16 @@
 import React, { Component } from "react";
 import { User } from "../../Models/Model";
-import "bootstrap/dist/css/bootstrap.min.css";
-import {
-  createUserService,
-  getUsersService
-} from "../../Services/user.service";
-interface Props {}
+import { createUserService, getUsersService } from '../../Services/user.service';
+interface Props { }
 interface IState {
   mail: string;
   password: string;
-  username: string;
   i: Number;
   isMechanic: boolean;
+  name:string;
+  surname:string;
+  mechanicid:string;
+  mechanicChosen:boolean;
 }
 const emptyString = "";
 class Register extends Component<Props, IState> {
@@ -20,85 +19,75 @@ class Register extends Component<Props, IState> {
   constructor(props: Props) {
     super(props);
     this.state = {
-      username: emptyString,
+      name: emptyString,
+      surname: emptyString,
       mail: emptyString,
       password: emptyString,
       i: 0,
-      isMechanic: false
+      isMechanic: false,
+      mechanicid:emptyString,
+      mechanicChosen:false
     };
   }
   render() {
     return (
-      <form className="login-form column ">
-        <div className="col ">
-          <div className="col">
-            <div className="row">
-              <label>Username:</label>
-            </div>{" "}
-            <div className="row">
-              <input
-                type="string"
-                value={this.state.username}
-                placeholder="Add username"
-                onChange={e => this.handleChangeUsername(e)}
-                className="input-email"
-              ></input>
-            </div>
-          </div>
-          <div className="col">
-            {" "}
-            <div className="row">
-              <label>Email:</label>
-            </div>{" "}
-            <div className="row">
-              <input
-                type="email"
-                value={this.state.mail}
-                placeholder="Add email"
-                onChange={e => this.handleChangeEmail(e)}
-                className="input-email"
-              ></input>
-            </div>
-          </div>
-          <div className="col">
-            <div className="row">
-              <label>Password:</label>
-            </div>{" "}
-            <div className="row">
-              <input
-                type="password"
-                value={this.state.password}
-                placeholder="Add password"
-                onChange={e => this.handleChangePassword(e)}
-                className="input-password"
-              ></input>
-            </div>
-          </div>
-          <input
-            type="checkbox"
-            onChange={e => this.handleChangeMechanic(e)}
-          ></input>{" "}
-          <label>Check if u re Mechanic</label>
-          <div className="buttons-login-register">
-            <button
-              id="btnReg"
-              className="btn btn-primary"
-              onClick={e => this.buttonRegisterClicked(e)}
-            >
-              {" "}
-              Register{" "}
-            </button>
-          </div>
+      <form className="login-form">
+        <label>Name:</label>
+        <input
+          type="string"
+          value={this.state.name}
+          placeholder="Add name"
+          onChange={e => this.handleChangeName(e)}
+          className="input-name"
+        ></input>
+        <label>Surname:</label>
+        <input
+          type="string"
+          value={this.state.surname}
+          placeholder="Add surname"
+          onChange={e => this.handleChangeSurname(e)}
+          className="input-name"
+        ></input>
+        <label>Email:</label>
+        <input
+          type="email"
+          value={this.state.mail}
+          placeholder="Add email"
+          onChange={e => this.handleChangeEmail(e)}
+          className="input-email"
+        ></input>
+        <label>Password:</label>
+        <input
+          type="password"
+          value={this.state.password}
+          placeholder="Add password"
+          onChange={e => this.handleChangePassword(e)}
+          className="input-password"
+        ></input>
+        <input type="checkbox" onChange={e => this.handleChangeMechanic(e)}></input> <label>Check if u re Mechanic</label>
+        <div className="buttons-login-register">
+          <button disabled={this.state.mechanicChosen} id="btnReg" className="btn btn-primary" onClick={e => this.buttonRegisterClicked(e)}>
+            Register{" "}
+          </button>
         </div>
       </form>
     );
+
   }
   handleChangeMechanic(e: any): void {
-    if (e.target.checked) this.setState({ isMechanic: true });
-    else this.setState({ isMechanic: false });
+    if (e.target.checked)
+      this.setState({ isMechanic: true });
+    else
+      this.setState({ isMechanic: false });
   }
   handleChangePassword(e: any): void {
     this.setState({ password: e.target.value });
+  }
+  handleChangeName(e:any): void {
+    this.setState({name:e.target.value});
+  }
+  handleChangeSurname(e:any): void {
+    this.setState({surname:e.target.value});
   }
   async handleChangeEmail(e: any): Promise<void> {
     var target = e.target;
@@ -106,34 +95,15 @@ class Register extends Component<Props, IState> {
       await this.getData();
       this.setState({ i: 1 });
     }
-    let pomocni: string[] = this.emails.filter(
-      element => element === target.value
-    );
+    let pomocni: string[] = this.emails.filter(element => element === target.value);
     this.setState({ mail: target.value });
     if (pomocni.length > 0) {
-      target.style.backgroundColor = "red";
+      target.style.backgroundColor = 'red';
       (document.getElementById("btnReg") as HTMLInputElement).disabled = true;
-    } else {
-      target.style.backgroundColor = "white";
-      (document.getElementById("btnReg") as HTMLInputElement).disabled = false;
     }
-  }
-  async handleChangeUsername(e: any): Promise<void> {
-    var target = e.target;
-    if (this.state.i === 0) {
-      await this.getData();
-      this.setState({ i: 1 });
-    }
-    let pomocni: string[] = this.usernames.filter(
-      element => element === target.value
-    );
-    this.setState({ username: target.value });
-    if (pomocni.length === 0) {
-      target.style.backgroundColor = "white";
+    else {
+      target.style.backgroundColor = 'white';
       (document.getElementById("btnReg") as HTMLInputElement).disabled = false;
-    } else {
-      target.style.backgroundColor = "red";
-      (document.getElementById("btnReg") as HTMLInputElement).disabled = true;
     }
   }
   buttonRegisterClicked(e: any): void {
@@ -141,20 +111,17 @@ class Register extends Component<Props, IState> {
     let user = {
       mail: this.state.mail,
       password: this.state.password,
-      username: this.state.username,
+      name: this.state.name,
+      surname: this.state.surname,
+      mechanicid: this.state.mechanicid,
       ismechanic: this.state.isMechanic
     };
     createUserService(user as User);
     console.log(user);
   }
   async getData() {
-    await getUsersService().then(
-      res => (this.usernames = res.map(element => element.username))
-    );
-    await getUsersService().then(
-      res => (this.emails = res.map(element => element.mail))
-    );
-    console.log(this.usernames);
+    await getUsersService().then(res => this.usernames = res.map(element => element.mail));
+    console.log(this.usernames)
   }
 }
 

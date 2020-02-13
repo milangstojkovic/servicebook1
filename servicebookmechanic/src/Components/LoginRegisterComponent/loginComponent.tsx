@@ -1,13 +1,12 @@
 import React, { Component, useReducer } from "react";
 //import "./login.css";
-import { getUserByNameService } from "../../Services/user.service";
+import { getUserByMailService } from "../../Services/user.service";
 import { User } from "../../Models/Model";
-import 'bootstrap/dist/css/bootstrap.min.css';
-
+import "bootstrap/dist/css/bootstrap.min.css";
 
 interface Props {}
 interface IState {
-  username: string;
+  mail: string;
   password: string;
 }
 const emptyString = "";
@@ -16,57 +15,55 @@ class Login extends Component<Props, IState> {
   constructor(props: Props) {
     super(props);
     this.state = {
-      username: emptyString,
-      password: emptyString,
+      mail: emptyString,
+      password: emptyString
     };
   }
-  handleChangeUsername(event: any): void {
-    this.setState({ username: event.target.value });
+  handleChangeMail(event: any): void {
+    this.setState({ mail: event.target.value });
   }
   handleChangePassword(event: any): void {
     this.setState({ password: event.target.value });
   }
   async logInUser(event: any): Promise<void> {
     event.preventDefault();
-    await getUserByNameService(this.state.username).then(res=>this.user=res);
+    await getUserByMailService(this.state.mail).then(res => (this.user = res));
     if (this.user) {
-      if (this.user.password==this.state.password) {
-        localStorage.setItem("username", this.user.username);
+      if (this.user.password == this.state.password) {
+        localStorage.setItem("mail", this.user.mail);
       }
     }
-    console.log(localStorage.getItem("username"));
+    console.log(localStorage.getItem("mail"));
   }
   render() {
     return (
-      <form className="login-form column">
-        <div className="col ">
-        <div className="col">
-          <div className="row">
-        <label>Username:</label>
-        </div>
-        <div className="row">
+      <form className="login-form">
+        <label>Mail:</label>
         <input
-          type="username"
-          value={this.state.username}
-          onChange={e => this.handleChangeUsername(e)}
-          placeholder="Add username"
-        ></input></div></div>
-        <div className="col">
-        <div className="row">
-
+          type="e-mail"
+          value={this.state.mail}
+          onChange={e => this.handleChangeMail(e)}
+          placeholder="Add mail"
+        ></input>
         <label>Password:</label>
-        </div>          <div className="row">
-
-        <input
-          type="password"
-          value={this.state.password}
-          placeholder="Add password"
-          onChange={e => this.handleChangePassword(e)}
-          className="input-password"
-        ></input></div></div>
-        <div className="buttons-login-register">
-          <button className="btn btn-primary" onClick={e=>this.logInUser(e)}> Login </button>
-        </div></div>
+        <div className="row">
+          <input
+            type="password"
+            value={this.state.password}
+            placeholder="Add password"
+            onChange={e => this.handleChangePassword(e)}
+            className="input-password"
+          ></input>
+          <div className="buttons-login-register">
+            <button
+              className="btn btn-primary"
+              onClick={e => this.logInUser(e)}
+            >
+              {" "}
+              Login{" "}
+            </button>
+          </div>
+        </div>
       </form>
     );
   }

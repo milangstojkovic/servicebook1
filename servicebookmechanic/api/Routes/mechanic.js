@@ -1,11 +1,11 @@
 const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose');
-const User = require('../Models/user');
+const Mechanic = require('../Models/mechanic');
 const bcrypt = require('bcryptjs');
 
 router.get('/', (req, res, next) => {
-    User.find()
+    Mechanic.find()
         .exec()
         .then(docs => {
             console.log(docs);
@@ -19,7 +19,7 @@ router.get('/', (req, res, next) => {
 });
 
 router.post('/login', (req, res, next) => {
-    User.find({ mail: req.body.mail })
+    Mechanic.find({ mail: req.body.mail })
         .exec()
         .then(user => {
             if (user.length < 1) {
@@ -52,12 +52,12 @@ router.post('/login', (req, res, next) => {
 });
 
 router.post('/signup', (req, res, next) => {
-    User.find({ mail: req.body.mail })
+    Mechanic.find({ mail: req.body.mail })
         .exec()
         .then(user => {
             if (user.length >= 1) {
                 return res.status(409).json({
-                    message: "mail exists!"
+                    message: "Mail exists!"
                 });
             } else {
                 bcrypt.hash(req.body.password, 10, (err, hash) => {
@@ -67,14 +67,13 @@ router.post('/signup', (req, res, next) => {
                             error: err
                         });
                     } else {
-                        const user = new User({
+                        const mechanic = new Mechanic({
                             name: req.body.name,
                             surname: req.body.surname,
                             password: req.body.password,
                             mail: req.body.mail,
-                            mechanicid: req.body.mechanicid
                         });
-                        user.save().then(result => {
+                        mechanic.save().then(result => {
                             console.log(result);
                             res.status(201).json({
                                 message: 'User created',
@@ -96,7 +95,7 @@ router.post('/signup', (req, res, next) => {
 
 router.get('/:mail', (req, res, next) => {
 
-    User.findOne({ mail: req.params.mail })
+    Mechanic.findOne({ mail: req.params.mail })
         .exec()
         .then(doc => {
             console.log(doc);
@@ -114,7 +113,7 @@ router.get('/:mail', (req, res, next) => {
 
 router.delete('/:mail', (req, res, next) => {
     const mail = req.params.mail
-    User.remove({ mail: mail }).exec()
+    Mechanic.remove({ mail: mail }).exec()
         .then(result => {
             res.status(200).json(result);
         })

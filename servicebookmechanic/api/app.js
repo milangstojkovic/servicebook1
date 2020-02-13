@@ -4,6 +4,8 @@ const morgan=require('morgan');
 const userRoutes=require('./Routes/user');
 const recordRoutes=require('./Routes/record');
 const vehicleRoutes=require('./Routes/vehicle');
+const mechanicRoutes=require('./Routes/mechanic');
+
 const bodyParser=require('body-parser');
 const mongoose=require('mongoose');
 
@@ -27,6 +29,7 @@ app.use((req, res, next)=> {
 app.use('/users', userRoutes);
 app.use('/record', recordRoutes);
 app.use('/vehicle', vehicleRoutes);
+app.use('/mechanic', mechanicRoutes);
 
 app.use((req, res, next)=> {
     const error=new Error('Not found');
