@@ -33,7 +33,7 @@ class LoginComponent extends Component<Props, IState> {
       await getMechanicByMailService(this.state.mail).then(res=>this.mechanic=res);
       if(this.mechanic) {
         if(this.mechanic.password==this.state.password) {
-          localStorage.setItem("mail", this.mechanic._id);
+          localStorage.setItem("mechanic", this.mechanic._id);
           localStorage.setItem("mechanic","logged");
           window.location.reload();
         }
