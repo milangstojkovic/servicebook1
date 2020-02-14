@@ -24,7 +24,7 @@ class RegisterUser extends Component<Props, IState> {
             mail: emptyString,
             password: emptyString,
             i: 0,
-            mechanicid: "jjjjjs"
+            mechanicid: "5e45bbd2677f04055c9d006e"
         };
     }
     render() {
