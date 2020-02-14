@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 
 const MechanicSchema = new mongoose.Schema({
+    _id:mongoose.Schema.Types.ObjectId,
     name: {
         type: String,
         trim: true,

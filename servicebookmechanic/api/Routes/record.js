@@ -23,10 +23,10 @@ router.post('/', (req, res, next) => {
         _id: new mongoose.Types.ObjectId(),
         name: req.body.name,
         startdate: req.body.startdate,
-        status: 0,
         vehicleid: req.body.vehicleid,
         answered: false,
-        mechanicid: req.body.mechanicid
+        mechanicid: req.body.mechanicid,
+        status: 0
     })
     record.save()
         .then(result=>{
@@ -42,10 +42,10 @@ router.post('/', (req, res, next) => {
 });
 
 
-router.get('/:recordid', (req,res,next)=> {
-    const id=req.params.recordid;
+router.get('/:vehicleid', (req,res,next)=> {
+    const id=req.params.vehicleid;
     
-    Record.findById(id).exec()
+    Record.find({vehicleid:id}).exec()
     .then(doc=>{
         console.log(doc);
         if(doc) {

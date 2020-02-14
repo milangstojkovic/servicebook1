@@ -6,6 +6,7 @@ import RegisterUser from './Components/RegisterUserComponent/registerUserCompone
 import RegisterMechanic from './Components/RegisterMechanicComponent/registerMechanicComponent';
 import HomeComponent from './Components/HomeComponent/homeComponent';
 import NavComponent from './Components/NavComponent/navComponent';
+import UserComponent from './Components/UserComponent/userComponent';
 
 
 const App = () => {
@@ -13,7 +14,8 @@ const App = () => {
   return (
     <div className="App">
       <header className="App-header">
-        <HomeComponent />
+        <UserComponent/>
+        <button onClick={e=>localStorage.clear()}>LOGOUT</button>
       </header>
     </div>
   );

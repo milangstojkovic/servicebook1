@@ -2,11 +2,14 @@ import React, { Component } from "react";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Vehicle} from "../../Models/Model";
 import { createVehicleService } from "../../Services/vehicle.service";
+import {Modal} from 'react-bootstrap';
+import './addVehicleComponent.css';
 interface Props { }
 interface IState {
     manufactor:string,
     model:string,
-    modelyear:number
+    modelyear:number,
+    success:boolean
 }
 class AddVehicleComponent extends Component<Props, IState> {
     constructor(props: Props) {
@@ -14,7 +17,8 @@ class AddVehicleComponent extends Component<Props, IState> {
         this.state = {
             manufactor:"",
             model:"",
-            modelyear:0
+            modelyear:0,
+            success:false
         };
     }
     render() {
@@ -28,6 +32,11 @@ class AddVehicleComponent extends Component<Props, IState> {
                         <tr><td></td><td><button disabled={this.state.manufactor=="" || this.state.model=="" || this.state.modelyear<1980 || this.state.modelyear>2020} className="btn btn-success" onClick={e=>this.addVehicle(e)}>Add</button></td></tr>
                     </tbody>
                 </table>
+                <Modal show={this.state.success}>
+                <div className="modal-content">
+                    <div className="modal-header correct"><h1>VEHICLE ADDED</h1></div>
+                </div>
+                </Modal>
             </form>
         );
     }
@@ -49,6 +58,12 @@ class AddVehicleComponent extends Component<Props, IState> {
             ownerid:localStorage.getItem("user")
         }
         await createVehicleService(vehicle as Vehicle);
+        this.setState({success:true});
+        await this.delay(5000);
+        window.location.reload();
+    }
+    delay(ms: number) {
+        return new Promise( resolve => setTimeout(resolve, ms) );
     }
 }
 export default AddVehicleComponent;

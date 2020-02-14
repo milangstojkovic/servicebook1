@@ -1,7 +1,12 @@
 const mongoose=require('mongoose');
 
 const RecordSchema=new mongoose.Schema({
-	id:mongoose.Schema.Types.ObjectId,
+	_id:mongoose.Schema.Types.ObjectId,
+	name:{
+		type:String,
+		trim:true,
+		required:true
+	},
 	startdate:
 	{
 		type:Date,
@@ -48,7 +53,7 @@ const RecordSchema=new mongoose.Schema({
 	price:{
 		type:Number,
 		trim:true,
-		reqired:true
+		reqired:false
 	}
 })
 

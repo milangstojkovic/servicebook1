@@ -34,7 +34,6 @@ class LoginComponent extends Component<Props, IState> {
       if(this.mechanic) {
         if(this.mechanic.password==this.state.password) {
           localStorage.setItem("mechanic", this.mechanic._id);
-          localStorage.setItem("mechanic","logged");
           window.location.reload();
         }
       }
@@ -44,10 +43,10 @@ class LoginComponent extends Component<Props, IState> {
       if (this.user) {
         if (this.user.password==this.state.password) {
           localStorage.setItem("user", this.user._id);
+          localStorage.setItem("mechanicid", this.user.mechanicid);
           window.location.reload();
         }
       }
-      console.log(localStorage.getItem("user"));
     }
 
   }
