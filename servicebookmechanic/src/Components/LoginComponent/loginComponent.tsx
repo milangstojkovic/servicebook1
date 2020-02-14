@@ -18,7 +18,7 @@ class LoginComponent extends Component<Props, IState> {
     super(props);
     this.state = {
       mail: emptyString,
-      password: emptyString,
+      password: emptyString
     };
   }
   handleChangeMail(event: any): void {
@@ -62,15 +62,23 @@ class LoginComponent extends Component<Props, IState> {
           placeholder="Add mail"
         ></input>
         <label>Password:</label>
-        <input
-          type="password"
-          value={this.state.password}
-          placeholder="Add password"
-          onChange={e => this.handleChangePassword(e)}
-          className="input-password"
-        ></input>
-        <div className="buttons-login-register">
-          <button className="btn btn-primary" onClick={e=>this.logInUser(e)}> Login </button>
+        <div className="row">
+          <input
+            type="password"
+            value={this.state.password}
+            placeholder="Add password"
+            onChange={e => this.handleChangePassword(e)}
+            className="input-password"
+          ></input>
+          <div className="buttons-login-register">
+            <button
+              className="btn btn-primary"
+              onClick={e => this.logInUser(e)}
+            >
+              {" "}
+              Login{" "}
+            </button>
+          </div>
         </div>
       </form>
     );

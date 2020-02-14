@@ -1,0 +1,22 @@
+.nav {
+    height: 100px;
+}
+
+.nav-item {
+    width:auto;
+}
+
+#logo {
+    text-align: left;
+    cursor: pointer;
+
+}
+#img{
+    width:auto;
+    height: 200px;
+}
+
+
+a {
+    color: lightblue;
+}
