@@ -1,9 +1,8 @@
 .nav {
-    height: 100px;
 }
 
 .nav-item {
-    width:auto;
+   
 }
 
 #logo {
@@ -13,10 +12,16 @@
 }
 #img{
     width:auto;
-    height: 200px;
+    height: 100px;
+    
 }
 
 
 a {
-    color: lightblue;
+    color: rgb(149, 179, 189);
+}
+.navbar{
+    display: flex;
+    flex-direction: row;
+    height: 100px;
 }

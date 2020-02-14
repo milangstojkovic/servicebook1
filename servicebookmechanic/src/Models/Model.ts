@@ -6,6 +6,7 @@ export interface User {
     mechanicid: string;
 }
 export interface Mechanic{
+    _id:string;
     name:string;
     surname:string;
     mail: string;
