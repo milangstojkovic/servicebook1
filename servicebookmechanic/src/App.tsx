@@ -13,6 +13,9 @@ const App = () => {
 
   return (
     <div className="App">
+      <nav>
+        <NavComponent/>
+      </nav>
       <header className="App-header">
         <UserComponent/>
         <button onClick={e=>localStorage.clear()}>LOGOUT</button>
