@@ -1,16 +1,19 @@
 import React, { Component, useReducer } from "react";
-//import "./login.css";
 import { getUserByMailService } from "../../Services/user.service";
-import { User } from "../../Models/Model";
+import { User, Mechanic } from "../../Models/Model";
+import { getMechanicByMailService } from "../../Services/mechanic.service";
 
-interface Props {}
+interface Props {
+  isMechanic:boolean;
+}
 interface IState {
   mail: string;
   password: string;
 }
 const emptyString = "";
-class Login extends Component<Props, IState> {
+class LoginComponent extends Component<Props, IState> {
   user!: User;
+  mechanic!: Mechanic;
   constructor(props: Props) {
     super(props);
     this.state = {
@@ -26,13 +29,27 @@ class Login extends Component<Props, IState> {
   }
   async logInUser(event: any): Promise<void> {
     event.preventDefault();
-    await getUserByMailService(this.state.mail).then(res=>this.user=res);
-    if (this.user) {
-      if (this.user.password==this.state.password) {
-        localStorage.setItem("mail", this.user.mail);
+    if(this.props.isMechanic){
+      await getMechanicByMailService(this.state.mail).then(res=>this.mechanic=res);
+      if(this.mechanic) {
+        if(this.mechanic.password==this.state.password) {
+          localStorage.setItem("mail", this.mechanic._id);
+          localStorage.setItem("mechanic","logged");
+          window.location.reload();
+        }
       }
     }
-    console.log(localStorage.getItem("mail"));
+    else {
+      await getUserByMailService(this.state.mail).then(res=>this.user=res);
+      if (this.user) {
+        if (this.user.password==this.state.password) {
+          localStorage.setItem("user", this.user._id);
+          window.location.reload();
+        }
+      }
+      console.log(localStorage.getItem("user"));
+    }
+
   }
   render() {
     return (
@@ -59,4 +76,4 @@ class Login extends Component<Props, IState> {
     );
   }
 }
-export default Login;
+export default LoginComponent;

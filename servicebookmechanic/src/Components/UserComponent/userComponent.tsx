@@ -1,29 +1,29 @@
-import React, { Component, useReducer } from "react";
+import React, { Component } from "react";
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { User, Vehicle, Record } from "../../Models/Model";
-import { getUsersService } from "../../Services/user.service";
-import "./mechanicComponent.css"
+import { Vehicle, Record } from "../../Models/Model";
+import { getVehiclesByUserService } from "../../Services/vehicle.service";
+import {Modal} from "react-bootstrap";
+import AddVehicleComponent from "./addVehicleComponent";
+import './userComponent.css'
 interface Props { }
 interface IState {
-
+    selectedVehicle:string;
+    vehicleModal:boolean;
 }
-class MechanicComponent extends Component<Props, IState> {
-    users!: User[];
+class UserComponent extends Component<Props, IState> {
     vehicles!: Vehicle[];
     records!: Record[];
     constructor(props: Props) {
         super(props);
         this.state = {
+            selectedVehicle:"",
+            vehicleModal:false
         };
-        this.users=[];
         this.vehicles=[];
         this.records=[];
         this.getData();
     }
     render() {
-        const userRender = this.users.map((user,index)=>
-            <li key={index} id={user.mail} className="list-group-item users" onClick={e=>this.setActiveUser(e)}>{user.name} {user.surname}</li>
-        )
         const vehicleRender = this.vehicles.map((vehicle, index)=>
             <li key={index} id={vehicle._id} onClick={e=>this.setActiveVehicle(e)} className="list-group-item vehicles">{vehicle.manufactor} {vehicle.model} {vehicle.modelyear}</li>
         )
@@ -34,31 +34,37 @@ class MechanicComponent extends Component<Props, IState> {
             <form className="mechanic-form">
                 <div className="row">
                     <div className="column">
-                        <ul className="list-group">
-                           {userRender}
-                        </ul>
-                    </div>
-                    <div className="column">
+                        <button className="btn btn-primary" onClick={e=>this.openVehicleModal(e)}>Add</button>
+                        <button className="btn btn-danger" disabled={this.state.selectedVehicle==""}>Delete</button>
                         <ul className="list-group">
                            {vehicleRender}
                         </ul>
                     </div>
                     <div className="column">
-                        <div className="list-group">
+                        <ul className="list-group">
                            {recordRender}
-                        </div>
+                        </ul>
                     </div>
                 </div>
+                <Modal show={this.state.vehicleModal}>
+                    <div className="modal-content">
+                    <div className="modal-header">
+                        <h5 className="modal-title">Add vehicle</h5>
+                    </div>
+                    <div className="modal-body">
+                        <AddVehicleComponent/>
+                    </div>
+                    <div className="modal-footer">
+                        <button className="btn btn-danger">Close</button>
+                    </div>
+                    </div>
+                </Modal>
             </form>
         );
     }
-    setActiveUser(event: any): void {
-        let target=event.target;
-        document.querySelectorAll(".users").forEach(el=>el.className="list-group-item users");
-        target.className="list-group-item users active"
-    }
     setActiveVehicle(event:any):void {
         let target=event.target;
+        this.setState({selectedVehicle:target.id});
         document.querySelectorAll(".vehicles").forEach(el=>el.className="list-group-item vehicles");
         target.className="list-group-item vehicles active"
     }
@@ -68,9 +74,13 @@ class MechanicComponent extends Component<Props, IState> {
         target.className="list-group-item records active"
     }
     async getData():Promise<void> {
-        await getUsersService().then(users=>this.users=users);
-        console.log(this.users);
+        await getVehiclesByUserService(localStorage.getItem("user") as string).then(res=>this.vehicles=res);
+        console.log(this.vehicles);
         this.forceUpdate();
     }
+    openVehicleModal(event:any):void {
+        event.preventDefault();
+        this.setState({vehicleModal:true})
+    }
 }
-export default MechanicComponent;
+export default UserComponent;

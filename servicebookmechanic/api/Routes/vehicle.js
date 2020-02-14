@@ -21,7 +21,8 @@ router.get('/', (req,res,next)=> {
 router.post('/', (req, res, next) => {
     const vehicle = new Vehicle({
         _id: new mongoose.Types.ObjectId(),
-        manufacturer: req.body.manufacturer,
+        manufactor: req.body.manufactor,
+        model:req.body.model,
         modelyear: req.body.modelyear,
         ownerid: req.body.ownerid
     })
@@ -39,10 +40,9 @@ router.post('/', (req, res, next) => {
 });
 
 
-router.get('/:vehicleid', (req,res,next)=> {
-    const id=req.params.vehicleid;
-    
-    Vehicle.findById(id).exec()
+router.get('/:ownerid', (req,res,next)=> {
+    const id=req.params.ownerid;  
+    Vehicle.find({ownerid:id}).exec()
     .then(doc=>{
         console.log(doc);
         if(doc) {

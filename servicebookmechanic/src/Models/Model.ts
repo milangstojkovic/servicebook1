@@ -1,4 +1,5 @@
 export interface User {
+    _id:string;
     name:string;
     surname:string;
     mail: string;
@@ -6,21 +7,22 @@ export interface User {
     mechanicid: string;
 }
 export interface Mechanic{
+    _id:string;
     name:string;
     surname:string;
     mail: string;
     password: string;
 }
 export interface Vehicle {
-    id: string;
-    manufacturer: string;
+    _id: string;
+    manufactor: string;
     model: string;
     modelyear: number;
     ownerid: string;
 }
 
 export interface Record {
-    id: string;
+    _id: string;
     name:string;
     startdate: Date;
     enddate: Date;

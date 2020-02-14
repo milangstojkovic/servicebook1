@@ -2,7 +2,7 @@ const mongoose=require('mongoose');
 
 const VehicleSchema=new mongoose.Schema({
 	id:mongoose.Schema.Types.ObjectId,
-	manufacturer:
+	manufactor:
 	{
 		type:String,
 		trim:true,
@@ -20,11 +20,6 @@ const VehicleSchema=new mongoose.Schema({
 		required:true
     },
     ownerid:{
-		type:String,
-		trim:true,
-		required:true
-	},
-	mechanicid:{
 		type:String,
 		trim:true,
 		required:true
