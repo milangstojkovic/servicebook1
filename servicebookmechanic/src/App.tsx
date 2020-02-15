@@ -12,27 +12,27 @@ import UserComponent from './Components/UserComponent/userComponent';
 
 
 const App = () => {
-  // if (localStorage.getItem("mechanicid"))
-  // return (
-  //   <div className="App">
-  //     <nav>
-  //       <NavComponent/>
-  //     </nav>
-  //     <div className="container">
-  //       <UserComponent/>
-  //       </div>
-  //   </div>
-  // ); else if(localStorage.getItem("user"))
-  // return (
-  //   <div className="App">
-  //     <nav>
-  //       <NavComponent/>
-  //     </nav>
-  //     <div className="container">
-  //       <MechanicComponent/>
-  //       </div>
-  //   </div>
-  // ); else
+  if (localStorage.getItem("mechanicid"))
+  return (
+    <div className="App">
+      <nav>
+        <NavComponent/>
+      </nav>
+      <div className="container">
+        <UserComponent/>
+        </div>
+    </div>
+  ); else if(localStorage.getItem("user"))
+  return (
+    <div className="App">
+      <nav>
+        <NavComponent/>
+      </nav>
+      <div className="container">
+        <MechanicComponent/>
+        </div>
+    </div>
+  ); else
   return (
     <div className="App">
       <nav>
@@ -40,7 +40,6 @@ const App = () => {
       </nav>
       <div className="container">
         <HomeComponent/>
-        <RecordsMechanic />
         </div>
     </div>
   );

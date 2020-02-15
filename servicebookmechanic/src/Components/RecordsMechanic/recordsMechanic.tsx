@@ -112,7 +112,7 @@ class RecordsMechanic extends Component<Props, IState> {
     let target = event.target;
   }
   async getData(): Promise<void> {
-    await getRecordsService().then(records => (this.records = records));
+    await getRecordsService().then(records => (this.records = records.filter(x=>x.answered==false)));
     this.forceUpdate();
   }
 }
