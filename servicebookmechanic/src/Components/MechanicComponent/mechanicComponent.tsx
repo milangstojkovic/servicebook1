@@ -69,7 +69,9 @@ class MechanicComponent extends Component<Props, IState> {
         let target=event.target;
         document.querySelectorAll(".users").forEach(el=>el.className="list-group-item users");
         document.querySelectorAll(".vehicles").forEach(el=>el.className="list-group-item vehicles");
-        document.querySelectorAll(".records").forEach(el=>el.className="list-group-item records");
+        document.querySelectorAll(".records").forEach(el=>el.className="list-group-item");
+        this.vehicles=[];
+        this.records=[];
         target.className="list-group-item users active"
         await getVehiclesByUserService(target.id).then(v=>this.vehicles=v);
         this.setState({activeRecord:""});
@@ -80,6 +82,7 @@ class MechanicComponent extends Component<Props, IState> {
         document.querySelectorAll(".vehicles").forEach(el=>el.className="list-group-item vehicles");
         document.querySelectorAll(".records").forEach(el=>el.className="list-group-item records");
         target.className="list-group-item vehicles active"
+        this.records=[];
         await getRecordsByVehicleService(target.id).then(r=>this.records=r);
         this.setState({activeRecord:""});
         this.forceUpdate();
