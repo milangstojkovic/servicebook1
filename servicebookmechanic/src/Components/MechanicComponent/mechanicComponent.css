@@ -1,3 +1,7 @@
 li {
     color:black;
 }
+.modal-mechanic{
+    display: flex;
+    flex-direction: column;
+}

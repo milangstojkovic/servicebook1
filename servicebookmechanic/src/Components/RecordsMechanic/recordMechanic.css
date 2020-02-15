@@ -2,5 +2,9 @@
     color:white;
 }
 .record{
-    color: white;
+    color: black;
+}
+.myrecords{
+    display: flex;
+    flex-direction: column;
 }

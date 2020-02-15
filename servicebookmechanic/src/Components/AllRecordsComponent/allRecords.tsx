@@ -1,6 +1,6 @@
 import React, { Component, useReducer } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
-import "./recordMechanic.css";
+import "./allRecords.css";
 import { Record, RecordStatus } from "./../../Models/Model";
 import { Modal } from "react-bootstrap";
 import { images } from "../../Images/images";
@@ -12,7 +12,7 @@ interface IState {
   recordid:string;
 }
 const emptyString = "";
-class RecordsMechanic extends Component<Props, IState> {
+class AllRecords extends Component<Props, IState> {
   records!: Record[];
   constructor(props: Props) {
     super(props);
@@ -32,22 +32,7 @@ class RecordsMechanic extends Component<Props, IState> {
         <td>{record.note}</td>
         <td>{RecordStatus[record.status]}</td>
         <td>{record.startdate.toString().substring(0, 10)}</td>
-        <td>
-          <button
-            className="btn btn-success"
-            id={record._id}
-            onClick={event => this.clickedAccept(event)}
-          >
-            Accept
-          </button>
-          <button
-            className="btn btn-danger"
-            id={record._id}
-            onClick={event => this.clickedDecline(event)}
-          >
-            Decline
-          </button>
-        </td>
+
         <td>
         <button
             className="btn btn-warning"
@@ -62,6 +47,7 @@ class RecordsMechanic extends Component<Props, IState> {
     return (
       <div className="myrecords">
         {" "}
+        <h1 className="h">Records history </h1>
         <table className="table table">
           <thead className="thead-dark">
             <tr>
@@ -70,7 +56,6 @@ class RecordsMechanic extends Component<Props, IState> {
               <th>Note</th>
               <th>Status</th>
               <th>Start date</th>
-              <th>Choose</th>
               <th>Edit record</th>
             </tr>
           </thead>
@@ -112,8 +97,8 @@ class RecordsMechanic extends Component<Props, IState> {
     let target = event.target;
   }
   async getData(): Promise<void> {
-    await getRecordsService().then(records => (this.records = records.filter(x=>x.answered==false)));
+    await getRecordsService().then(records => (this.records = records));
     this.forceUpdate();
   }
 }
-export default RecordsMechanic;
+export default AllRecords;

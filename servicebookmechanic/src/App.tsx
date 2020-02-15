@@ -9,6 +9,7 @@ import LoginComponent from './Components/LoginComponent/loginComponent';
 import RecordsMechanic from "./Components/RecordsMechanic/recordsMechanic";
 import EditRecord from './Components/EditRecordComponent/editRecordComponent';
 import UserComponent from './Components/UserComponent/userComponent';
+import AllRecords from './Components/AllRecordsComponent/allRecords';
 
 
 const App = () => {
