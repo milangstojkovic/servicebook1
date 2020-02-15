@@ -43,6 +43,7 @@ class LoginComponent extends Component<Props, IState> {
       if (this.user) {
         if (this.user.password==this.state.password) {
           localStorage.setItem("user", this.user._id);
+          localStorage.setItem("userMail", this.user.mail);
           localStorage.setItem("mechanicid", this.user.mechanicid);
           window.location.reload();
         }

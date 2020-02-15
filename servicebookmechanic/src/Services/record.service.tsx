@@ -14,9 +14,9 @@ export const getRecordsService = (): Promise<Record[]> =>
 
 export const getRecordsByVehicleService = (
   vehicleid: String
-): Promise<Record[]> =>
+): Promise<Record> =>
   axios
-    .get<Record[]>(`${baseUrl}/record/${vehicleid}`)
+    .get<Record>(`${baseUrl}/record/${vehicleid}`)
     .then(response => response.data)
     .catch(err => {
       throw err;

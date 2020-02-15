@@ -21,3 +21,7 @@ export const createVehicleService = (vehicle: Vehicle): any =>
             throw err
         })
 
+export const deleteSelectedVehicle= (vehicleid: String): any =>
+        axios.delete(
+            `${baseUrl}/vehicle/${vehicleid}`
+        )

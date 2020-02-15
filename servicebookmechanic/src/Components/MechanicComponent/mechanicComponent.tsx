@@ -4,7 +4,7 @@ import { User, Vehicle, Record } from "../../Models/Model";
 import { getUsersService } from "../../Services/user.service";
 import "./mechanicComponent.css"
 import { getVehiclesByUserService } from "../../Services/vehicle.service";
-import { getRecordsByVehicleService } from "../../Services/record.service";
+import { getRecordsByVehicleService, getRecordsService } from "../../Services/record.service";
 interface Props { }
 interface IState {
     activeRecord:string;
@@ -83,7 +83,7 @@ class MechanicComponent extends Component<Props, IState> {
         document.querySelectorAll(".records").forEach(el=>el.className="list-group-item records");
         target.className="list-group-item vehicles active"
         this.records=[];
-        await getRecordsByVehicleService(target.id).then(r=>this.records=r);
+        await getRecordsService().then(res=>this.records=res.filter(r=>r.vehicleid==target.id));
         this.setState({activeRecord:""});
         this.forceUpdate();
     }

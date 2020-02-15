@@ -31,7 +31,7 @@ export interface Record {
     status: RecordStatus;
     vehicleid:string;
     answered: boolean;
-    mechanicid: number;
+    mechanicid: string;
     price:number;
 }
 

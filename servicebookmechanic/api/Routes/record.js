@@ -41,25 +41,6 @@ router.post('/', (req, res, next) => {
         })
 });
 
-
-router.get('/:vehicleid', (req,res,next)=> {
-    const id=req.params.vehicleid;
-    
-    Record.find({vehicleid:id}).exec()
-    .then(doc=>{
-        console.log(doc);
-        if(doc) {
-            res.status(200).json(doc);
-        } else {
-            res.status(404).json({message:'Nista'});
-        }
-    })
-    .catch(err=> {
-        console.log(err)
-        res.status(500).json({error:err});
-    });
-});
-
 router.get('/:recordid', (req,res,next)=> {
     const id=req.params.recordid;
     
@@ -95,7 +76,7 @@ router.delete('/:recordid', (req,res,next)=> {
 
 router.patch('/:recordid', (req,res,next)=> {
     const id=req.params.recordid;
-    record.update({_id:id}, {$set: {startdate:req.body.startdate, enddate:req.body.enddate, vehiclekms:req.body.vehiclekms, note:req.body.note, answered:true, status:req.body.status}})
+    Record.update({_id:id}, {$set: {startdate:req.body.startdate, enddate:req.body.enddate, vehiclekms:req.body.vehiclekms, note:req.body.note, answered:true, status:req.body.status}})
     .exec()
     .then(result=> {
         console.log(result);
