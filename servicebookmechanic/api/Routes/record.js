@@ -60,10 +60,28 @@ router.get('/:vehicleid', (req,res,next)=> {
     });
 });
 
+router.get('/:recordid', (req,res,next)=> {
+    const id=req.params.recordid;
+    
+    Record.findById(id).exec()
+    .then(doc=>{
+        console.log(doc);
+        if(doc) {
+            res.status(200).json(doc);
+        } else {
+            res.status(404).json({message:'Nista'});
+        }
+    })
+    .catch(err=> {
+        console.log(err)
+        res.status(500).json({error:err});
+    });
+});
+
 
 router.delete('/:recordid', (req,res,next)=> {
-    const id=req.params.recordid
-    record.remove({_id: id}).exec()
+    const id=req.params.recordid;
+    Record.deleteOne({_id: id}).exec()
     .then(result => {
         res.status(200).json(result);
     })
