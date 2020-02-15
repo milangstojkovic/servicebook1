@@ -5,14 +5,21 @@ import { Record, RecordStatus } from "./../../Models/Model";
 import { Modal } from "react-bootstrap";
 import { images } from "../../Images/images";
 import { getRecordsService, deleteRecordService } from "../../Services/record.service";
+import EditRecord from "../EditRecordComponent/editRecordComponent";
 interface Props {}
-interface IState {}
+interface IState {
+  editRecordIsOpen:boolean;
+  recordid:string;
+}
 const emptyString = "";
 class RecordsMechanic extends Component<Props, IState> {
   records!: Record[];
   constructor(props: Props) {
     super(props);
-    this.state = {};
+    this.state = {
+      editRecordIsOpen:false,
+      recordid:emptyString
+    };
     this.records = [];
     this.getData();
 
@@ -41,12 +48,21 @@ class RecordsMechanic extends Component<Props, IState> {
             Decline
           </button>
         </td>
+        <td>
+        <button
+            className="btn btn-warning"
+            id={record._id}
+            onClick={event => this.clickedEdit(event)}
+          >
+            Edit
+          </button>
+        </td>
       </tr>
     ));
     return (
       <div>
         {" "}
-        <table className="table table-hover">
+        <table className="table table">
           <thead className="thead-dark">
             <tr>
               <th>No.</th>
@@ -55,12 +71,36 @@ class RecordsMechanic extends Component<Props, IState> {
               <th>Status</th>
               <th>Start date</th>
               <th>Choose</th>
+              <th>Edit record</th>
             </tr>
           </thead>
           <tbody>{recordsRender}</tbody>
         </table>
+        <Modal show={this.state.editRecordIsOpen}>
+          <div className="btnClose">
+            <button
+              onClick={e => this.closeEditRecordModal(e)}
+              className="btn btn-danger"
+            >
+              X
+            </button>
+          </div>
+          <EditRecord
+          recordId={this.state.recordid} />
+        </Modal>
       </div>
     );
+  }
+  clickedEdit(event: any): void {
+    let target=event.target;
+    this.setState({
+      editRecordIsOpen:true,
+      recordid:target.id
+    })  }
+  closeEditRecordModal(e: React.MouseEvent<HTMLButtonElement, MouseEvent>): void {
+    this.setState({
+      editRecordIsOpen:false
+    })
   }
   async clickedDecline(event: any): Promise<void> {
     let target = event.target;

@@ -93,9 +93,9 @@ router.delete('/:recordid', (req,res,next)=> {
     })
 });
 
-router.patch('/:recordid', (req,res,next)=> {
+router.put('/:recordid', (req,res,next)=> {
     const id=req.params.recordid;
-    record.update({_id:id}, {$set: {startdate:req.body.startdate, enddate:req.body.enddate, vehiclekms:req.body.vehiclekms, note:req.body.note, answered:true, status:req.body.status}})
+    Record.update({_id:id}, {$set: {startdate:req.body.startdate, enddate:req.body.enddate, vehiclekms:req.body.vehiclekms, note:req.body.note, answered:true, status:req.body.status}})
     .exec()
     .then(result=> {
         console.log(result);
