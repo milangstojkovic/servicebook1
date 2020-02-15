@@ -1,6 +1,9 @@
 .cards{
     display: flex;
     flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    justify-self: center;
 }
 .card-home{
     width: 300px;
@@ -38,3 +41,15 @@
       flex-direction: column;
     }
   }
+
+  p {
+      color:white
+  }
+  h3 {
+      color:white;
+  }
+#container1 {
+    align-items: center;
+    justify-content: center;
+    justify-self: center;
+}

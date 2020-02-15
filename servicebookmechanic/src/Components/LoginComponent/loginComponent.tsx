@@ -33,7 +33,7 @@ class LoginComponent extends Component<Props, IState> {
       await getMechanicByMailService(this.state.mail).then(res=>this.mechanic=res);
       if(this.mechanic) {
         if(this.mechanic.password==this.state.password) {
-          localStorage.setItem("mechanic", this.mechanic._id);
+          localStorage.setItem("user", this.mechanic._id);
           window.location.reload();
         }
       }
@@ -53,15 +53,22 @@ class LoginComponent extends Component<Props, IState> {
   render() {
     return (
       <form className="login-form">
-        <label>Mail:</label>
+        <table className="table">
+          <tbody>
+            <tr>
+        <td>Mail:</td>
+        <td>
         <input
           type="e-mail"
           value={this.state.mail}
           onChange={e => this.handleChangeMail(e)}
           placeholder="Add mail"
         ></input>
-        <label>Password:</label>
-        <div className="row">
+        </td>
+        </tr>
+        <tr>
+        <td>Password:</td>
+        <td>
           <input
             type="password"
             value={this.state.password}
@@ -69,16 +76,20 @@ class LoginComponent extends Component<Props, IState> {
             onChange={e => this.handleChangePassword(e)}
             className="input-password"
           ></input>
-          <div className="buttons-login-register">
+          </td>
+          </tr>
+          <tr><td></td>
+          <td>
             <button
               className="btn btn-primary"
               onClick={e => this.logInUser(e)}
             >
-              {" "}
-              Login{" "}
+              Login
             </button>
-          </div>
-        </div>
+            </td>
+            </tr>
+        </tbody>
+        </table>
       </form>
     );
   }

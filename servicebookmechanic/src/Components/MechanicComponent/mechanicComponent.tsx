@@ -3,9 +3,11 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { User, Vehicle, Record } from "../../Models/Model";
 import { getUsersService } from "../../Services/user.service";
 import "./mechanicComponent.css"
+import { getVehiclesByUserService } from "../../Services/vehicle.service";
+import { getRecordsByVehicleService } from "../../Services/record.service";
 interface Props { }
 interface IState {
-
+    activeRecord:string;
 }
 class MechanicComponent extends Component<Props, IState> {
     users!: User[];
@@ -14,6 +16,7 @@ class MechanicComponent extends Component<Props, IState> {
     constructor(props: Props) {
         super(props);
         this.state = {
+            activeRecord:""
         };
         this.users=[];
         this.vehicles=[];
@@ -22,7 +25,7 @@ class MechanicComponent extends Component<Props, IState> {
     }
     render() {
         const userRender = this.users.map((user,index)=>
-            <li key={index} id={user.mail} className="list-group-item users" onClick={e=>this.setActiveUser(e)}>{user.name} {user.surname}</li>
+            <li key={index} id={user._id} className="list-group-item users" onClick={e=>this.setActiveUser(e)}>{user.name} {user.surname}</li>
         )
         const vehicleRender = this.vehicles.map((vehicle, index)=>
             <li key={index} id={vehicle._id} onClick={e=>this.setActiveVehicle(e)} className="list-group-item vehicles">{vehicle.manufactor} {vehicle.model} {vehicle.modelyear}</li>
@@ -34,42 +37,61 @@ class MechanicComponent extends Component<Props, IState> {
             <form className="mechanic-form">
                 <div className="row">
                     <div className="column">
+                        <div className="container">
+                        <h1>USERS</h1>
                         <ul className="list-group">
                            {userRender}
                         </ul>
+                        </div>
                     </div>
                     <div className="column">
+                    <div className="container">
+                    <h1>VEHICLES</h1>
                         <ul className="list-group">
                            {vehicleRender}
                         </ul>
-                    </div>
-                    <div className="column">
-                        <div className="list-group">
-                           {recordRender}
                         </div>
                     </div>
+                    <div className="column">
+                    <div className="container">
+                    <h1>RECORDS</h1>
+                        <ul className="list-group">
+                           {recordRender}
+                        </ul>
+                    </div>
+                    </div>
                 </div>
+                <button hidden={this.state.activeRecord==""} className="btn btn-warning"><h3>UPDATE</h3></button>
             </form>
         );
     }
-    setActiveUser(event: any): void {
+    async setActiveUser(event: any): Promise <void> {
         let target=event.target;
         document.querySelectorAll(".users").forEach(el=>el.className="list-group-item users");
+        document.querySelectorAll(".vehicles").forEach(el=>el.className="list-group-item vehicles");
+        document.querySelectorAll(".records").forEach(el=>el.className="list-group-item records");
         target.className="list-group-item users active"
+        await getVehiclesByUserService(target.id).then(v=>this.vehicles=v);
+        this.setState({activeRecord:""});
+        this.forceUpdate();
     }
-    setActiveVehicle(event:any):void {
+    async setActiveVehicle(event:any):Promise<void> {
         let target=event.target;
         document.querySelectorAll(".vehicles").forEach(el=>el.className="list-group-item vehicles");
+        document.querySelectorAll(".records").forEach(el=>el.className="list-group-item records");
         target.className="list-group-item vehicles active"
+        await getRecordsByVehicleService(target.id).then(r=>this.records=r);
+        this.setState({activeRecord:""});
+        this.forceUpdate();
     }
     setActiveRecord(event:any): void {
         let target=event.target;
         document.querySelectorAll(".records").forEach(el=>el.className="list-group-item records");
         target.className="list-group-item records active"
+        this.setState({activeRecord:target.id});
     }
     async getData():Promise<void> {
         await getUsersService().then(users=>this.users=users);
-        console.log(this.users);
         this.forceUpdate();
     }
 }

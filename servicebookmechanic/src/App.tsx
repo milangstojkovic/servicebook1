@@ -10,16 +10,35 @@ import UserComponent from './Components/UserComponent/userComponent';
 
 
 const App = () => {
-
+  if (localStorage.getItem("mechanicid"))
   return (
     <div className="App">
       <nav>
         <NavComponent/>
       </nav>
-      <header className="App-header">
+      <div className="container">
         <UserComponent/>
-        <button onClick={e=>localStorage.clear()}>LOGOUT</button>
-      </header>
+        </div>
+    </div>
+  ); else if(localStorage.getItem("user"))
+  return (
+    <div className="App">
+      <nav>
+        <NavComponent/>
+      </nav>
+      <div className="container">
+        <MechanicComponent/>
+        </div>
+    </div>
+  ); else
+  return (
+    <div className="App">
+      <nav>
+        <NavComponent/>
+      </nav>
+      <div className="container">
+        <HomeComponent/>
+        </div>
     </div>
   );
 }

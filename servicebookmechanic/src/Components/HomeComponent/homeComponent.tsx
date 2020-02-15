@@ -5,10 +5,13 @@ import { Modal } from "react-bootstrap";
 import { images } from "../../Images/images";
 import RegisterMechanic from "../RegisterMechanicComponent/registerMechanicComponent";
 import RegisterUser from "../RegisterUserComponent/registerUserComponent";
+import LoginComponent from "../LoginComponent/loginComponent";
 interface Props {}
 interface IState {
   registerMechanicModalIsOpen: boolean;
   registerUserModalIsOpen: boolean;
+  loginMechanicModal:boolean;
+  loginUserModal:boolean;
 }
 const emptyString = "";
 class HomeComponent extends Component<Props, IState> {
@@ -16,11 +19,14 @@ class HomeComponent extends Component<Props, IState> {
     super(props);
     this.state = {
       registerMechanicModalIsOpen: false,
-      registerUserModalIsOpen: false
+      registerUserModalIsOpen: false,
+      loginMechanicModal:false,
+      loginUserModal:false
     };
   }
   render() {
     return (
+      <div className="container" id="container1">
       <div className="cards">
         <div className="card-home">
           <img
@@ -34,7 +40,7 @@ class HomeComponent extends Component<Props, IState> {
             <p className="card-text">Select option to continue using app.</p>
             <div className="col">
               <div className="row">
-                <a href="#" className="btn btn-primary">
+                <a href="#" className="btn btn-primary" onClick={e=>this.openLoginMechanicModal(e)}>
                   Log in
                 </a>
               </div>
@@ -62,7 +68,7 @@ class HomeComponent extends Component<Props, IState> {
             <p className="card-text">Select option to continue using app.</p>
             <div className="col">
               <div className="row">
-                <a href="#" className="btn btn-primary">
+                <a href="#" className="btn btn-primary" onClick={e=>this.openLoginUserModal(e)}>
                   Log in
                 </a>
               </div>
@@ -100,6 +106,33 @@ class HomeComponent extends Component<Props, IState> {
           </div>
           <RegisterUser />
         </Modal>
+        <Modal show={this.state.loginUserModal}>
+                <div className="modal-content">
+                    <div className="modal-header">
+                        <h5 className="modal-title">Login user</h5>
+                    </div>
+                    <div className="modal-body">
+                        <LoginComponent isMechanic={false}/>
+                    </div>
+                    <div className="modal-footer">
+                        <button className="btn btn-danger" onClick={e=>this.closeLoginUserModal(e)}>Close</button>
+                    </div>
+                    </div>
+          </Modal>
+          <Modal show={this.state.loginMechanicModal}>
+                <div className="modal-content">
+                    <div className="modal-header">
+                        <h5 className="modal-title">Login mechanic</h5>
+                    </div>
+                    <div className="modal-body">
+                        <LoginComponent isMechanic={true}/>
+                    </div>
+                    <div className="modal-footer">
+                        <button className="btn btn-danger" onClick={e=>this.closeLoginMechanicModal(e)}>Close</button>
+                    </div>
+                    </div>
+          </Modal>
+      </div>
       </div>
     );
   }
@@ -130,6 +163,22 @@ class HomeComponent extends Component<Props, IState> {
     this.setState({
       registerMechanicModalIsOpen: false
     });
+  }
+  openLoginUserModal(e:any): void {
+    e.preventDefault();
+    this.setState({loginUserModal:true});
+  }
+  openLoginMechanicModal(e:any):void {
+    e.preventDefault();
+    this.setState({loginMechanicModal:true});
+  }
+  closeLoginUserModal(e:any): void {
+    e.preventDefault();
+    this.setState({loginUserModal:false});
+  }
+  closeLoginMechanicModal(e:any):void {
+    e.preventDefault();
+    this.setState({loginMechanicModal:false});
   }
 }
 export default HomeComponent;
