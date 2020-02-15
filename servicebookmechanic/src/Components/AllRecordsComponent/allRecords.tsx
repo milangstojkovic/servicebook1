@@ -6,7 +6,9 @@ import { Modal } from "react-bootstrap";
 import { images } from "../../Images/images";
 import { getRecordsService, deleteRecordService } from "../../Services/record.service";
 import EditRecord from "../EditRecordComponent/editRecordComponent";
-interface Props {}
+interface Props {
+    mechanicId:string;
+}
 interface IState {
   editRecordIsOpen:boolean;
   recordid:string;
@@ -47,7 +49,7 @@ class AllRecords extends Component<Props, IState> {
     return (
       <div className="myrecords">
         {" "}
-        <h1 className="h">Records history </h1>
+        <h1 className="h">Records history in Service</h1>
         <table className="table table">
           <thead className="thead-dark">
             <tr>

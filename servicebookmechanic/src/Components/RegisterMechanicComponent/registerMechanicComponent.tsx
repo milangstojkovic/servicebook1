@@ -31,6 +31,9 @@ class RegisterMechanic extends Component<Props, IState> {
     return (
       <form className="login-form">
         <div className="column" id="forma">
+        <div className="row">
+            <h1 className="regUser">Register mechanic</h1>
+          </div>
           <div className="row">
             <label>Name:</label>
           </div>

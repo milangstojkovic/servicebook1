@@ -111,7 +111,8 @@ class MechanicComponent extends Component<Props, IState> {
           </button>
         </form>
         <div className="records-table">
-            <AllRecords />
+            <AllRecords 
+            mechanicId={localStorage.getItem("mechanicid")||""} />
         </div>
         <Modal className="modal-mechanic" show={this.state.activeAllRecords}>
           <div className="btnClose">
