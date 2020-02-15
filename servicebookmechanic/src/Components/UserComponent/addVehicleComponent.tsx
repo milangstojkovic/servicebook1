@@ -59,7 +59,7 @@ class AddVehicleComponent extends Component<Props, IState> {
         }
         await createVehicleService(vehicle as Vehicle);
         this.setState({success:true});
-        await this.delay(5000);
+        await this.delay(2500);
         window.location.reload();
     }
     delay(ms: number) {

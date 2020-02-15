@@ -38,19 +38,23 @@ class UserComponent extends Component<Props, IState> {
             <form className="mechanic-form">
                 <div className="row">
                     <div className="column">
+                        <div className="container">
                         <h1>Vehicles</h1>
                         <button className="btn btn-primary" onClick={e=>this.openVehicleModal(e)}>Add</button>
                         <button className="btn btn-danger" disabled={this.state.selectedVehicle==""}>Delete</button>
                         <ul className="list-group">
                            {vehicleRender}
                         </ul>
+                        </div>
                     </div>
                     <div className="column">
+                        <div className="container">
                         <h1>Records</h1>
                         <button disabled={this.state.selectedVehicle==""} className="btn btn-primary" onClick={e=>this.openRecordModal(e)}>Add</button>
                         <ul className="list-group">
                            {recordRender}
                         </ul>
+                    </div>
                     </div>
                 </div>
                 <Modal show={this.state.vehicleModal}>

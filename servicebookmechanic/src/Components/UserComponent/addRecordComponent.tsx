@@ -56,7 +56,7 @@ class AddRecordComponent extends Component<Props, IState> {
         console.log(record);
         await createRecordService(record);    
         this.setState({success:true});
-        await this.delay(5000);
+        await this.delay(2500);
         window.location.reload();
     }
     delay(ms: number) {

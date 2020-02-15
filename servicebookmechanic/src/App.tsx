@@ -8,19 +8,39 @@ import NavComponent from './Components/NavComponent/navComponent';
 import LoginComponent from './Components/LoginComponent/loginComponent';
 import RecordsMechanic from "./Components/RecordsMechanic/recordsMechanic";
 import EditRecord from './Components/EditRecordComponent/editRecordComponent';
+import UserComponent from './Components/UserComponent/userComponent';
 
 
 const App = () => {
+  if (localStorage.getItem("mechanicid"))
   return (
     <div className="App">
       <nav>
         <NavComponent/>
       </nav>
-      <header className="App-header">
-        <HomeComponent />
-        <EditRecord
-          recordId="a"/>
-      </header>
+      <div className="container">
+        <UserComponent/>
+        </div>
+    </div>
+  ); else if(localStorage.getItem("user"))
+  return (
+    <div className="App">
+      <nav>
+        <NavComponent/>
+      </nav>
+      <div className="container">
+        <MechanicComponent/>
+        </div>
+    </div>
+  ); else
+  return (
+    <div className="App">
+      <nav>
+        <NavComponent/>
+      </nav>
+      <div className="container">
+        <HomeComponent/>
+        </div>
     </div>
   );
 }

@@ -19,8 +19,14 @@ class HomeComponent extends Component<Props, IState> {
                         <img className="item" src={images.LOGO}  title="LOG OUT" id="img"></img>
                         </div>
                     </li>
-                </ul></div>
+                </ul>
+                <button className="btn btn-outline-danger" onClick={e=>this.logout(e)}>LOGOUT</button></div>
     );
+  }
+  logout(e:any):void {
+    e.preventDefault();
+    localStorage.clear();
+    window.location.reload();
   }
 }
 export default HomeComponent;
