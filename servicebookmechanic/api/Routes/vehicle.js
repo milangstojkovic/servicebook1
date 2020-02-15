@@ -60,7 +60,7 @@ router.get('/:ownerid', (req,res,next)=> {
 
 router.delete('/:vehicleid', (req,res,next)=> {
     const id=req.params.vehicleid
-    vehicle.remove({_id: id}).exec()
+    Vehicle.remove({_id: id}).exec()
     .then(result => {
         res.status(200).json(result);
     })

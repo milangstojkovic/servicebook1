@@ -33,7 +33,7 @@ export const createUserService = (user: User): any =>
             throw err
         })
 
-export const updateUserService = (user: User): any =>
+export const updateUserService = (user: any): any =>
     axios.put(
         `${baseUrl}/users/${user.mail}`, user
     )

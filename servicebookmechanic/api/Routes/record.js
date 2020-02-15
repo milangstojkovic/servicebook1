@@ -41,25 +41,6 @@ router.post('/', (req, res, next) => {
         })
 });
 
-
-router.get('/:vehicleid', (req,res,next)=> {
-    const id=req.params.vehicleid;
-    
-    Record.find({vehicleid:id}).exec()
-    .then(doc=>{
-        console.log(doc);
-        if(doc) {
-            res.status(200).json(doc);
-        } else {
-            res.status(404).json({message:'Nista'});
-        }
-    })
-    .catch(err=> {
-        console.log(err)
-        res.status(500).json({error:err});
-    });
-});
-
 router.get('/:recordid', (req,res,next)=> {
     const id=req.params.recordid;
     

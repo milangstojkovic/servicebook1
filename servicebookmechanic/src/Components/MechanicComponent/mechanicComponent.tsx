@@ -4,7 +4,7 @@ import { User, Vehicle, Record } from "../../Models/Model";
 import { getUsersService } from "../../Services/user.service";
 import "./mechanicComponent.css"
 import { getVehiclesByUserService } from "../../Services/vehicle.service";
-import { getRecordsByVehicleService } from "../../Services/record.service";
+import { getRecordsByVehicleService, getRecordsService } from "../../Services/record.service";
 interface Props { }
 interface IState {
     activeRecord:string;
@@ -69,7 +69,9 @@ class MechanicComponent extends Component<Props, IState> {
         let target=event.target;
         document.querySelectorAll(".users").forEach(el=>el.className="list-group-item users");
         document.querySelectorAll(".vehicles").forEach(el=>el.className="list-group-item vehicles");
-        document.querySelectorAll(".records").forEach(el=>el.className="list-group-item records");
+        document.querySelectorAll(".records").forEach(el=>el.className="list-group-item");
+        this.vehicles=[];
+        this.records=[];
         target.className="list-group-item users active"
         await getVehiclesByUserService(target.id).then(v=>this.vehicles=v);
         this.setState({activeRecord:""});
@@ -80,7 +82,8 @@ class MechanicComponent extends Component<Props, IState> {
         document.querySelectorAll(".vehicles").forEach(el=>el.className="list-group-item vehicles");
         document.querySelectorAll(".records").forEach(el=>el.className="list-group-item records");
         target.className="list-group-item vehicles active"
-        await getRecordsByVehicleService(target.id).then(r=>this.records=r);
+        this.records=[];
+        await getRecordsService().then(res=>this.records=res.filter(r=>r.vehicleid==target.id));
         this.setState({activeRecord:""});
         this.forceUpdate();
     }

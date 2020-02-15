@@ -1,17 +1,22 @@
 import React, { Component } from "react";
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Vehicle, Record } from "../../Models/Model";
-import { getVehiclesByUserService } from "../../Services/vehicle.service";
+import { Vehicle, Record, RecordStatus } from "../../Models/Model";
+import { getVehiclesByUserService, deleteSelectedVehicle } from "../../Services/vehicle.service";
 import {Modal} from "react-bootstrap";
 import AddVehicleComponent from "./addVehicleComponent";
 import './userComponent.css'
 import AddRecordComponent from "./addRecordComponent";
-import { getRecordsByVehicleService } from "../../Services/record.service";
+import { getRecordsByVehicleService, deleteRecordService, getRecordsService } from "../../Services/record.service";
+import ChangeMechanicComponent from "./changeMechanicComponent";
+import RecordComponent from "./recordComponent";
 interface Props { }
 interface IState {
     selectedVehicle:string;
     vehicleModal:boolean;
     recordModal:boolean;
+    changeMechanicModal:boolean;
+    record:boolean;
+    selectedRecord:string;
 }
 class UserComponent extends Component<Props, IState> {
     vehicles!: Vehicle[];
@@ -20,8 +25,11 @@ class UserComponent extends Component<Props, IState> {
         super(props);
         this.state = {
             selectedVehicle:"",
+            selectedRecord:"",
             vehicleModal:false,
-            recordModal:false
+            recordModal:false,
+            changeMechanicModal:false,
+            record:false
         };
         this.vehicles=[];
         this.records=[];
@@ -32,7 +40,7 @@ class UserComponent extends Component<Props, IState> {
             <li key={index} id={vehicle._id} onClick={e=>this.setActiveVehicle(e)} className="list-group-item vehicles">{vehicle.manufactor} {vehicle.model} {vehicle.modelyear}</li>
         )
         const recordRender = this.records.map ((record, index)=>
-            <li key={index} id={record._id} onClick={e=>this.setActiveRecord(e)} className="list-group-item records">{record.name} {record.startdate.toString().substring(0,10)} </li>
+            <li key={index} id={record._id} onClick={e=>this.setActiveRecord(e)} onDoubleClick={e=>this.openRecord(e)} className="list-group-item records">{record.name} {record.startdate.toString().substring(0,10)} {RecordStatus[record.status]} </li>
         )
         return (
             <form className="mechanic-form">
@@ -41,7 +49,7 @@ class UserComponent extends Component<Props, IState> {
                         <div className="container">
                         <h1>Vehicles</h1>
                         <button className="btn btn-primary" onClick={e=>this.openVehicleModal(e)}>Add</button>
-                        <button className="btn btn-danger" disabled={this.state.selectedVehicle==""}>Delete</button>
+                        <button className="btn btn-danger" disabled={this.state.selectedVehicle==""} onClick={e=>this.deleteSelectedVehicle(e)}>Delete</button>
                         <ul className="list-group">
                            {vehicleRender}
                         </ul>
@@ -83,6 +91,35 @@ class UserComponent extends Component<Props, IState> {
                     </div>
                     </div>
                 </Modal>
+                <Modal show={this.state.changeMechanicModal}>
+                <div className="modal-content">
+                    <div className="modal-header">
+                        <h5 className="modal-title">Change mechanic</h5>
+                    </div>
+                    <div className="modal-body">
+                        <ChangeMechanicComponent/>
+                    </div>
+                    <div className="modal-footer">
+                        <button className="btn btn-danger" onClick={e=>this.closeChangeMechanicModal(e)}>Close</button>
+                    </div>
+                    </div>
+                </Modal>
+                <Modal show={this.state.record}>
+                <div className="modal-content">
+                    <div className="modal-header">
+                        <h5 className="modal-title">Record</h5>
+                    </div>
+                    <div className="modal-body">
+                        <RecordComponent
+                        recordid={this.state.selectedRecord}/>
+                    </div>
+                    <div className="modal-footer">
+                        <button className="btn btn-danger" onClick={e=>this.closeRecord(e)}>Close</button>
+                    </div>
+                    </div>
+                </Modal>
+                <hr></hr>
+                <button className="btn btn-warning" onClick={e=>this.openChangeMechanicModal(e)}><h5>CHANGE MECHANIC</h5></button>
             </form>
         );
     }
@@ -91,7 +128,7 @@ class UserComponent extends Component<Props, IState> {
         await this.setState({selectedVehicle:target.id});
         document.querySelectorAll(".vehicles").forEach(el=>el.className="list-group-item vehicles");
         target.className="list-group-item vehicles active"
-        await getRecordsByVehicleService(this.state.selectedVehicle).then(res=>this.records=res);
+        await getRecordsService().then(res=>this.records=res.filter(r=>r.vehicleid==this.state.selectedVehicle));
         console.log(this.records);
         this.forceUpdate();
     }
@@ -99,6 +136,7 @@ class UserComponent extends Component<Props, IState> {
         let target=event.target;
         document.querySelectorAll(".records").forEach(el=>el.className="list-group-item records");
         target.className="list-group-item records active"
+        this.setState({selectedRecord:target.id});
     }
     async getData():Promise<void> {
         await getVehiclesByUserService(localStorage.getItem("user") as string).then(res=>this.vehicles=res);
@@ -120,6 +158,27 @@ class UserComponent extends Component<Props, IState> {
     closeRecordModal(event:any): void {
         event.preventDefault();
         this.setState({recordModal:false});
+    }
+    async deleteSelectedVehicle(event:any): Promise<void> {
+        await this.records.forEach(record=>deleteRecordService(record._id));
+        await deleteSelectedVehicle(this.state.selectedVehicle);
+        window.location.reload();
+    }
+    closeChangeMechanicModal(event:any):void {
+        event.preventDefault();
+        this.setState({changeMechanicModal:false});
+    }
+    openChangeMechanicModal(event:any): void {
+        event.preventDefault();
+        this.setState({changeMechanicModal:true});
+    }
+    openRecord(event:any): void {
+        event.preventDefault();
+        this.setState({record:true});
+    }
+    closeRecord(event:any): void {
+        event.preventDefault();
+        this.setState({record:false});
     }
 }
 export default UserComponent;
